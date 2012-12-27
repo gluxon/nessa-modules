@@ -122,12 +122,13 @@ class paping extends NessaModule {
 				$this->commands($recipient, $message, $nick, $host);
 			break;
 			case 'JOIN':
-				// Add to peoples list
+				$recipient = $data["2"];
+
 				if (preg_match("/pa_\d{4,4}$/i", $nick) == 1) {
 					$this->ping($nick);
-					$this->say('Hi ' . $nick . '! Welcome to the PortableApps.com IRC channel. '. 
-							'Please ask your question and someone should be with you shorty. If '.
-							'you do not receive an answer wait a bit longer or consider posting '. 
+					$this->say("#portableapps", 'Hi ' . $nick . '! Welcome to the PortableApps.com '.
+							'IRC channel. Please ask your question and someone should be with you shorty. '. 
+							'If you do not receive an answer wait a bit longer or consider posting '. 
 							'it on the forums.');
 				}
 			break;
