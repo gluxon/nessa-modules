@@ -64,7 +64,9 @@ class paping extends NessaModule {
 		}
 
 		else if ( strpos(implode($message), 'help') !== false || strpos($command, 'help') !== false  ) {
-			$this->pingHelp($nick);
+			if (!in_array($nick, $this->ping)) {
+				$this->pingHelp($nick);
+			}
 		}
 
 	}
