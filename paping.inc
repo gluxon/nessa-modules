@@ -33,8 +33,14 @@ class paping extends NessaModule {
 		$command = $message["0"];
 		$arguments = $message["1"];
 
+		if ($recipient = $user["nick"]) {
+			$send = $nick;
+		} else {
+			$send = $recipient;
+		}
+
 		if (strtolower($command) == ".help") {
-			$this->say($recipient, $nick. ": Hi! I'm pabot. I'm used to ping people when a user " .
+			$this->say($send, $nick. ": Hi! I'm pabot. I'm used to ping people when a user " .
 					"looking for help arrives. Use .add or .remove to add or remove yourself from " .
 					"the ping list.");
 		}
@@ -44,7 +50,7 @@ class paping extends NessaModule {
 				$this->commands($recipient, ".remove", $nick, $host);
 			} else {
 				array_push($this->ping, $nick);
-				$this->say($recipient, $nick . ": You have been added to the ping list. Whenever " .
+				$this->say($send, $nick . ": You have been added to the ping list. Whenever " .
 						"pa_**** joins the channel, or someone says \"help\", you will be pinged.");
 				$this->updateFile();
 			}
@@ -54,11 +60,11 @@ class paping extends NessaModule {
 
 			if (in_array($nick, $this->ping)) {
 				unset($this->ping[array_search($nick, $this->ping)]);
-				$this->say($recipient, $nick . ": You have been removed from the ping list.");
+				$this->say($send, $nick . ": You have been removed from the ping list.");
 
 				$this->updateFile();
 			} else {
-				$this->say($recipient, $nick . ": You were never in the ping list.");
+				$this->say($send, $nick . ": You were never in the ping list.");
 			}
 
 		}
